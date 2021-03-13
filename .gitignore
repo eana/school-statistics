@@ -1,0 +1,13 @@
+# OS and Editor Files
+*.swp
+.DS_Store
+.idea
+.vscode
+
+# Python Cache files
+*.py[cod]
+__pycache__/
+
+# School files
+schools*/
+*.xlsx
