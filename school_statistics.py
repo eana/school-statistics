@@ -11,20 +11,20 @@ from bs4 import BeautifulSoup
 headers = [
     "School",
     "Ämne",
-    "Total",
-    "Flickor",
-    "Pojkar",
-    "Total",
-    "Flickor",
-    "Pojkar",
-    "Total",
-    "Flickor",
-    "Pojkar",
+    "Total1",
+    "Flickor1",
+    "Pojkar1",
+    "Total2",
+    "Flickor2",
+    "Pojkar2",
+    "Total3",
+    "Flickor3",
+    "Pojkar3",
 ]
 
 kommun = {
     'stockholm': '0180',
-    'huddinge': '0126'
+    'huddinge': '0126',
 }
 
 
@@ -51,7 +51,6 @@ def read_html(filename):
         table = soup.find_all('table')[0]
         rows = table.find_all('tr')
         sheetname = os.path.splitext(os.path.basename(filename))[0]
-        headers = ['School'] + [x.string for x in rows[9].find_all('td')]
         if len(rows[10].find_all('td')) == 1:
             return
 
