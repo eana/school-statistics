@@ -51,8 +51,8 @@ kommun = {
 }
 
 
-def get_all_schools(path, kommun_cod, grade):
-    Path(f"{path}-{grade}").mkdir(parents=True, exist_ok=True)
+def get_all_schools(path, kommun_cod):
+    Path(f"{path}-9").mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(f"{path}.csv")
 
@@ -67,16 +67,16 @@ def get_all_schools(path, kommun_cod, grade):
             pattern, r.content.decode("ISO-8859-1")).group()
         url = f"https://siris.skolverket.se/{urlpart}"
         r = requests.get(url)
-        open(f"./{path}-{grade}/{name}.xls", "wb").write(r.content)
+        open(f"./{path}-9/{name}.xls", "wb").write(r.content)
 
 
-def read_html(path, grade):
-    paths = glob.glob(f"{path}-{grade}/*.xls")
+def read_html(path):
+    paths = glob.glob(f"{path}-9/*.xls")
     # paths = ["schools-stockholm-9/Kungliga Svenska Balettskolan.xls"]
     paths.sort()
 
     dfObj = pd.DataFrame(columns=headers)
-    writer = pd.ExcelWriter(f"{path}-{grade}.xlsx", engine="xlsxwriter")
+    writer = pd.ExcelWriter(f"{path}-9.xlsx", engine="xlsxwriter")
 
     for filename in paths:
         with open(filename, "r", encoding="ISO-8859-1") as f:
@@ -100,15 +100,13 @@ def read_html(path, grade):
 
 
 for key in kommun:
-    # the grade can be 6 or 9
-    grade = 9
     path = f"./schools-{key}"
     kommun_namn = key
     kommun_cod = kommun[key]
 
     print(f"Kommun: {kommun_namn}")
     print("Get all schools!")
-    # get_all_schools(path, kommun_cod, grade)
+    get_all_schools(path, kommun_cod)
 
     print("Create the excel file!\n")
-    read_html(path, grade)
+    read_html(path)
